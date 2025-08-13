@@ -21,9 +21,6 @@ mongoose.connection.on('error',(err)=>{
     console.log(err)
 });
 
-// app.use(fileUpload({
-//   useTempFiles:true
-// }))
 
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
