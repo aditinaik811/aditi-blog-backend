@@ -7,9 +7,11 @@ const BlogRoute = require('./api/routes/blog');
 const categoryRoute = require('./api/routes/category');
 const authRoute = require('./api/routes/auth');
 const commentRoute = require('./api/routes/comment')
+require('dotenv').config();
+
 
 const cors = require('cors');
-mongoose.connect('mongodb+srv://aditinaik861:Namaste123@blog.7qhyyys.mongodb.net/?retryWrites=true&w=majority&appName=blog')
+mongoose.connect(process.env.MONGO_URI)
 mongoose.connection.on('connected',()=>{
     console.log("Connected with Database")
 })
