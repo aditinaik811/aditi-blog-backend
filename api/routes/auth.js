@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const User = require('../model/auth');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-
+const JWT = process.env.JWT_TOKEN
 
 
 //user signup
