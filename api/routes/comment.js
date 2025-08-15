@@ -3,14 +3,20 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Comment = require('../model/comment');
 const checkAuth = require('../middleware/checkAuth')
+const jwt = require('jsonwebtoken')
 
 //post new comment 
-router.post('/',(req,res)=>{
+router.post('/add-comment/:id',checkAuth,(req,res)=>{
+    const token = req.headers.authorization.split(" ")[1]
+    const verify = jwt.verify(token,'I am Aditi');
+    const name = verify.fullName
+    console.log(name)
     const newComment = new Comment({
         _id:new mongoose.Types.ObjectId,
        email:req.body.email,
        commentText:req.body.commentText,
-       blogId:req.body.blogId,
+       blogId:req.params.id,
+       name:name
 
     })
     newComment.save()
@@ -47,7 +53,21 @@ router.get('/',(req,res)=>{
 })
 
 
-
+router.get('/get-comments/:id',(req,res)=>{
+    Comment.find({blogId:req.params.id})
+    .then(result=>{
+        console.log(result)
+        res.status(200).json({
+            comments:result
+        })
+    })
+    .catch(err=>{
+        console.log(err)
+        res.status(500).josn({
+            error:err
+        })
+    })
+})
 
 //delete comment by id
 router.delete('/:id',(req,res)=>{
